@@ -3,7 +3,7 @@ with a trace length of S.
  
 
 Antenna characteristics:
-iterations  1 ,2 or 3 \n
+iterations  1 ,2 or 3
 lateral size L from 0.001m  to 0.1m
 made of metal 
 air substrate 
