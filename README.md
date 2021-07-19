@@ -37,23 +37,23 @@ The application consists of a single file written in Python 3.7 which must be ex
 
 Calculate the resonant frequencies of a Peano antenna with a lateral size L=0.025m,  width d=0.25mm, an iteration i=2 with feed point at 1/8S (0.125S)
 
-python peanoantena.py -p -r -i 2 -L 0.025 -d 0.5 -feed 0.125
+python Peano_antennas.py -p -r -i 2 -L 0.025 -d 0.5 -feed 0.125
 
 Calculate the center frequencies with VSWR <2 of a Peano antenna with a lateral size L=0.033m, width d=0.25mm, an iteration i=3 with feed point at 7/16S (0.4375)
 
-python peanoantena.py -p -vswr -i 3 -L 0.033 -d 0.25 -feed 0.4375
+python Peano_antennas.py -p -vswr -i 3 -L 0.033 -d 0.25 -feed 0.4375
 
 Calculate the properties of an iteration antenna i=1, feed point at 5/16S (0.1875) and resonant frequency F=2200MHz.
 
-python peanoantena.py -a -r -i 1 -feed 0.1875 -F 2200
+python Peano_antennas.py -a -r -i 1 -feed 0.1875 -F 2200
 
 Calculate the properties of the iteration antenna i=2 with the feed point at 1/2S (0.5) and center frequency with VSWR<2 at 2800MHz.
 
-python peanoantena.py -a -vswr -i 2 -feed 0.5 -F 2800
+python Peano_antennas.py -a -vswr -i 2 -feed 0.5 -F 2800
 
-Generate the geometry of a Peano antenna with i=2, the feed point at 0.5S, L-system step of n=4 and filename peano2.m
+Generate the geometry of a Peano antenna with i=2, d=1.0mm, the feed point at 0.5S, L-system step of n=4 and filename peano2.m
 
-python 01_aplicacion_peano.py -g  -i=2 -feed=0.5 -d=1.0 -file peano2 -n=4
+python Peano_antennas.py -g  -i=2 -feed=0.5 -d=1.0 -file peano2 -n=4
  
 
  
