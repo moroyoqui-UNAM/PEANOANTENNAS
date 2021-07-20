@@ -42,7 +42,6 @@ The application consists of a single file written in Python 3.7 which must be ex
 
    * p		properties (vswr,resonance).   
    * g		generate the mesh.   
-   * a		calculates antenna characteristics.   
    * vswr	calculates the center frequency with  VSWR < 2
    * r		calculates the resonance frequency 
    * g		generates antenna geometry in a file .m  for processing in MATLAB  
