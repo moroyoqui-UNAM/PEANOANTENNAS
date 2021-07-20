@@ -69,7 +69,7 @@ python Peano_antennas.py  -vswr -i 1  -feed 0.125 -F 1650.0  -d 1.0
 
 Generate the geometry of a Peano antenna with i=2, d=1.0mm, the feed point at 0.5S, L-system step of n=4 and filename peano2.m
 
-python Peano_antennas.py -g  -i=2 -feed=0.5 -d=1.0 -file peano2 -n=4
+python Peano_antennas.py -g  -i 2 -feed 0.5 -d 1.0 -file peano2 -n 4
 
 
  
