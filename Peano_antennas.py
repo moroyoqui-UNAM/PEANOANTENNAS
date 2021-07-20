@@ -1274,7 +1274,8 @@ c=299792458.0
 
 def Calcula_L_Resonancia_i_d_feed_f(i,d,feed,F):
 	regreso=[]
-	#    
+	#
+	conteo=0
 	Z=[z_581,z_582,z_607,z_580,z_608,z_609,z_610,z_611,z_706,z_707,z_708,z_709]
 	for __ in Z:
 		for _ in __:
@@ -1287,9 +1288,12 @@ def Calcula_L_Resonancia_i_d_feed_f(i,d,feed,F):
 							a=_[4]/1e6
 							b=_[5]
 							L=a/F+b
-							print  ("0","a=",a,"b=",b,"fi=",fa,"fs=",fb,"Frecuencia=",F)
-							regreso.append([L,_[6]])
-	return regreso
+							print  (conteo,"a=",a,"b=",b,"fi=",fa,"MHz","fs=",fb,"MHz","Frequency=",F,"MHz")
+							conteo+=1
+							#regreso.append([L,_[6]])
+	if conteo==0:
+		print ("No results found")
+	#return regreso
 
 
 def Calcula_F_Resonancia_i_d_feed_L(i,d,feed,L):
@@ -1320,6 +1324,7 @@ def Calcula_F_Resonancia_i_d_feed_L(i,d,feed,L):
 
 def Calcula_L_VSWR_i_d_feed_f(ix,d,feed,F):
 	regreso=[]
+	conteo=0
 	VSWR=[vswr_581,vswr_582,vswr_608,vswr_610,vswr_611,vswr_608,vswr_706,vswr_707,vswr_708,vswr_709]
 	BW=[bw_581,bw_582,bw_608,bw_610,bw_611,bw_608,bw_706,bw_707,bw_708,bw_709]
 	for i in range(len(VSWR)):
@@ -1343,13 +1348,14 @@ def Calcula_L_VSWR_i_d_feed_f(ix,d,feed,F):
 							beta=BW[i][j][5]
 							gama=BW[i][j][6]
 							bw=alfa*F**2.0+beta*F+gama
-							print  (j,"a=",a,"b=",b,"fi=",fa,"fs=",fb,"Frecuencia=",F,"alfa",alfa,"beta",beta,"gama",gama)
-							regreso.append([L,VSWR[i][j][6],bw])
-	return regreso
-
+							print  (conteo,"L=",L,"a=",a,"b=",b,"fi=",fa,"fs=",fb,"Frecuencia=",F,"alfa",alfa,"beta",beta,"gama",gama)
+							conteo+=1
+	if conteo==0:
+		print ("No results found")
 
 def Calcula_F_VSWR_i_d_feed_L(ix,d,feed,L):
 	regreso=[]
+	conteo=0
 	VSWR=[vswr_581,vswr_582,vswr_608,vswr_610,vswr_611,vswr_608,vswr_706,vswr_707,vswr_708,vswr_709]
 	BW=[bw_581,bw_582,bw_608,bw_610,bw_611,bw_608,bw_706,bw_707,bw_708,bw_709]
 	for i in range(len(VSWR)):
@@ -1367,9 +1373,12 @@ def Calcula_F_VSWR_i_d_feed_L(ix,d,feed,L):
 							beta=BW[i][j][5]
 							gama=BW[i][j][6]
 							bw=alfa*F**2.0+beta*F+gama
-							print  (j,"a=",a,"b=",b,"fi=",fa,"fs=",fb,"Frecuencia=",F,"alfa",alfa,"beta",beta,"gama",gama)
-							regreso.append([L,F,VSWR[i][j][6],bw])
-	return regreso
+							print  (conteo,"a=",a,"b=",b,"fi=",fa,"MHz","fs=",fb,"MHz","Frequency=",F,"MHz","alpha=",alfa,"beta=",beta,"gamma=",gama, "BW=",bw,"%")
+							conteo+=1
+							#regreso.append([L,F,VSWR[i][j][6],bw])
+	if conteo==0:
+		print ("No results found")
+
 
 
 import argparse
@@ -1379,45 +1388,48 @@ parser = argparse.ArgumentParser(description='This is a Py sample program of Pea
 if __name__ == "__main__":
 	#opts, args = getopt.getopt(sys.argv[1:], '')
 	#parser.add_argument('-p', action="store_true", default=False)
-	parser.add_argument('-feed', action="store", dest="feed", type=float)
-	parser.add_argument('-file', action="store", dest="filem", type=str)
-	parser.add_argument('-d', action="store", dest="d", type=float)
-	parser.add_argument('-i', action="store", dest="i", type=int)
-	parser.add_argument('-n', action="store", dest="n", type=int)
-	parser.add_argument('-L', action="store", dest="L", type=float,default=0.0)
-	parser.add_argument('-F', action="store", dest="F", type=float,default=0.0)
-
-	parser.add_argument('-g', action="store_true",default=False)
-	parser.add_argument('-r', action="store_true", default=False)
-	parser.add_argument('-vswr', action="store_true",default=False)
-	parser.add_argument('-p', action="store_true",default=False)
+	parser.add_argument('-feed', action="store", dest="feed", type=float, help="Feeding  point of Peano antenna")
+	parser.add_argument('-file', action="store", dest="filem", type=str, help="File name to save antenna mesh. ")
+	parser.add_argument('-d', action="store", dest="d", type=float, help= "Antenna width ")
+	parser.add_argument('-i', action="store", dest="i", type=int, help="Iteration antenna [1,2,3]")
+	parser.add_argument('-n', action="store", dest="n", type=int,help="step of L-system for Peano antenna")
+	parser.add_argument('-L', action="store", dest="L", type=float,default=0.0, help="Lateral size [m]")
+	parser.add_argument('-F', action="store", dest="F", type=float,default=0.0, help="Frequency [MHz]")
+	parser.add_argument('-g', action="store_true",default=False, help="Generates antenna mesh")
+	parser.add_argument('-r', action="store_true", default=False, help="Search impdance")
+	parser.add_argument('-vswr', action="store_true",default=False, help="Search VSWR")
+	parser.add_argument('-p', action="store_true",default=False, help="See properties")
 	
 	#parser.add_argument('-help', action="store_true",default=False)
 
 	#parser.add_argument('-c', action="store", dest="c", type=int)
 	#print(parser.parse_args(['-a', '-bval', '-c', '3']))
 	results = parser.parse_args()
-	if results.r==True and results.p==True and results.g==False  and results.vswr==False:
-		print ("Consultando Ecuaciones de impedancia ")
-		#Calcula_L_Resonancia_i_d_feed_f(i,d,feed,F):
-		print (Calcula_L_Resonancia_i_d_feed_f(results.i,results.d,results.feed,results.F))
+	if results.r==True and results.p==True and results.g==False and results.vswr==False and results.F>0.0 and  results.feed>0.0:		
+		print ("0ok")
+		print ("Impedance curves L=a/F+b")
+		Calcula_L_Resonancia_i_d_feed_f(results.i,results.d,results.feed,results.F)
 
-	elif results.vswr==True and results.p==True and results.F!=0.0 and results.g==False and results.r==False :
-		print ("Consultando Ecuaciones de vswr < 2 ")
-		print(Calcula_L_VSWR_i_d_feed_f(results.i,results.d,results.feed,results.F))
+	elif results.vswr==True  and results.F!=0.0 and results.g==False and results.r==False:
+		print ("1")
+		print ("VSWR < 2 curves ")
+		Calcula_L_VSWR_i_d_feed_f(results.i,results.d,results.feed,results.F)
 
 
-	elif results.r==True and results.p==True and results.L!=0.0 and results.g==False and results.vswr==False  :
+	elif results.r==True and results.L!=0.0 and results.g==False and results.vswr==False and results.i>0 and results.d>0.0  :
+		print ("2")
 		Calcula_F_Resonancia_i_d_feed_L(results.i,results.d,results.feed,results.L)
 
 
 	elif results.vswr==True and results.p==True and results.L!=0.0 and results.r==False and results.g==False:
-		print ("Consultando Ecuaciones de vswr < 2 ")
-		print(Calcula_F_VSWR_i_d_feed_L(results.i,results.d,results.feed,results.L ))
+		print ("3ok")
+		print ("Equations VSWR<2 L=a/F+b ")
+		Calcula_F_VSWR_i_d_feed_L(results.i,results.d,results.feed,results.L )
 
 
 	elif results.g==True and results.r==False and results.vswr==False and results.p==False and results.feed>0.0 :
-		print ("Generando geometria ")
+		print ("4ok")
+		print ("Generating antenna")
 		GenAntenna(results.filem,results.i,results.d,results.feed,results.n)
 	else:
 		print("Not enough parameters")
